@@ -20,7 +20,7 @@ class Character:
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 데미지를 입혔습니다.")
         if enemy.hp == 0:
             print(f"{enemy.name}이(가) 쓰러졌습니다.")
-        
+
     def show_status(self):
         print(f"{self.name}의 상태: HP {self.hp}/{self.max_hp}")
 
@@ -46,7 +46,7 @@ class Player(Character):
         print(f"{self.name}의 마법공격! {enemy.name}에게 {damage}의 마법 데미지를 입혔습니다.")
         if enemy.hp == 0:
             print(f"{enemy.name}이(가) 쓰러졌습니다.")
-        
+
 
     # 부모 클래스에 존재하는 status_check 메소드를 overriding 합니다.
 
@@ -76,18 +76,23 @@ devils = [
     Monster("디아블로", 4000, 30)
 ]
 devil = random.choice(devils)
-print(f"{player.name}님 악마 {devil.name}가(이) 소환되었습니다. 전투를 준비하세요.")
+
 
 
 while True:
 
-    print(f"{player.name}님의 체력을 확인합니다. : {player.hp}")
-    print(f"{devil.name}의 체력을 확인합니다. : {devil.hp} 더러운 악마에게 신의 철퇴를")
+    print(f"{player.name}님 악마 {devil.name}가(이) 소환되었습니다. 전투를 준비하세요.")
+    Player.show_status(player)
+    Monster.status_check(devil)
+    # print(f"{player.name}님의 체력을 확인합니다. : {player.hp}")
+    # print(f"{devil.name}의 체력을 확인합니다. : {devil.hp} 더러운 악마에게 신의 철퇴를")
     
-    player.attack(devil)
+    
 
     devil.attack(player)
 
+    Player.show_status(player)
+    Monster.status_check(devil)
     
     break
     
