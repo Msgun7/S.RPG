@@ -20,7 +20,7 @@ class Character:
         print(f"{self.name}의 공격! {enemy.name}에게 {damage}의 데미지를 입혔습니다.")
         if enemy.hp == 0:
             print(f"{enemy.name}이(가) 쓰러졌습니다.")
-
+        
     def show_status(self):
         print(f"{self.name}의 상태: HP {self.hp}/{self.max_hp}")
 
@@ -46,15 +46,17 @@ class Player(Character):
         print(f"{self.name}의 마법공격! {enemy.name}에게 {damage}의 마법 데미지를 입혔습니다.")
         if enemy.hp == 0:
             print(f"{enemy.name}이(가) 쓰러졌습니다.")
+        
 
     # 부모 클래스에 존재하는 status_check 메소드를 overriding 합니다.
+
     def status_check(self):
         print(f"Player's hp : {self.hp}")
 
 
 class Monster(Character):
     def __init__(self, name, hp, power):
-        super().__init__(self, name, hp, power)
+        super().__init__(name, hp, 0, power)
 
     def status_check(self):
         print(f"devil's hp : {self.hp}")
@@ -62,18 +64,31 @@ class Monster(Character):
 
 # 캐릭터와 몬스터를 생성합니다.
 player_name = input("캐릭터를 생성합니다. 이름을 입력하십시오. : ")
-player = Player(player_name, 300, 200, 50, 200)
+print(f"하느님 감사합니다, 드디어 돌아오셨군요! {player_name}님 당신이 떠난 후로 많은 게 변했습니다. ")
+player = Player(player_name, 300, 200, 100, 200)
 devils = [
-    Monster("베리알", 30, 3),
-    Monster("아즈모단", 50, 5),
-    Monster("바알", 100, 10),
-    Monster("메피스토", 150, 15),
-    Monster("두리엘", 200, 20),
-    Monster("안다리엘", 300, 25),
-    Monster("디아블로", 400, 30)
+    Monster("베리알", 300, 30),
+    Monster("아즈모단", 500, 50),
+    Monster("바알", 1000, 30),
+    Monster("메피스토", 1500, 30),
+    Monster("두리엘", 2000, 20),
+    Monster("안다리엘", 3000, 25),
+    Monster("디아블로", 4000, 30)
 ]
 devil = random.choice(devils)
+print(f"{player.name}님 악마 {devil.name}가(이) 소환되었습니다. 전투를 준비하세요.")
 
 
-print(f"{player.name}")
-print(f"{devil.name}")
+while True:
+
+    print(f"{player.name}님의 체력을 확인합니다. : {player.hp}")
+    print(f"{devil.name}의 체력을 확인합니다. : {devil.hp} 더러운 악마에게 신의 철퇴를")
+    
+    player.attack(devil)
+
+    devil.attack(player)
+
+    
+    break
+    
+    
