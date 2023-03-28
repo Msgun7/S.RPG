@@ -78,15 +78,14 @@ class Monster(Character):
     def show_status(self):
         print(
             f"\033[31m{devil.name}\033[0m 의 상태: HP \033[91m{self.hp}\033[0m/\033[91m{self.max_hp}\033[0m \n")
-    # 몬스터 HP상태 체크
 
+    # 몬스터 HP상태 체크
     def status_check(self):
         print(f"\033[31m{devil.name}\033[0m 의 HP" +
               f" : \033[91m{self.hp}\033[0m \n")
 
+
 # 디아블로에만 플레이어 부활 기믹을 넣기 위한 클래스
-
-
 class Diablo(Monster):
     def __init__(self, name, hp, power):
         super().__init__(name, hp, power)
