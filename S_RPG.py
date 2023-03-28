@@ -35,7 +35,7 @@ class Player(Character):
 
     # 플레이어의 통상공격
     def attack(self, enemy):
-        damage = random.randint(self.power - 2, self.power + 2)
+        damage = random.randint(self.power - 20, self.power + 20)
         enemy.hp = max(enemy.hp - damage, 0)
         print(f"\033[32m{player_name}\033[0m의" + "\033[96m{통상공격}\033[0m 으로" +
               f"\033[31m{devil.name}\033[0m에게 \033[95m{damage}\033[0m의 데미지를 입혔습니다.")
@@ -76,7 +76,7 @@ class Monster(Character):
 
     # 몬스터의 통상공격
     def attack(self, enemy):
-        damage = random.randint(self.power - 2, self.power + 2)
+        damage = random.randint(self.power - 20, self.power + 20)
         enemy.hp = max(enemy.hp - damage, 0)
         print(f"\033[31m{devil.name}\033[0m의" + "\033[96m{통상공격}\033[0m 으로" +
               f"\033[32m{player_name}\033[0m" + f"에게 \033[95m{damage}\033[0m의 데미지를 입혔습니다.")
