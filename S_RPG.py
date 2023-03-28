@@ -11,7 +11,7 @@ class Character:
         self.mp = mp
         self.power = power
 
-# 플레이어
+# 플레이어 클래스
 
 
 class Player(Character):
@@ -20,7 +20,7 @@ class Player(Character):
         self.mpower = mpower
         self.mp_max = mp
 
-    # 플레이어의 통상공격
+    # 플레이어의 통상공격(색 배분을 위한 모체 클래스에서의 분리)
     def attack(self, enemy):
         damage = random.randint(self.power - 2, self.power + 2)
         enemy.hp = max(enemy.hp - damage, 0)
@@ -33,11 +33,11 @@ class Player(Character):
 
 # 플레이어의 마법공격
     def mattack(self, enemy):
-        if self.mp == 0:
-            print("마나가 부족하여" + f"\033[32m{self.name}\033[0m" +
-                  "님의 "+"\033[93m{신성마법}\033[0m이 사용불가능합니다.\n")
-            return
-
+        # if self.mp == 0:
+        #     print("마나가 부족하여" + f"\033[32m{self.name}\033[0m" +
+        #           "님의 "+"\033[93m{신성마법}\033[0m이 사용불가능합니다.\n")
+        #     return
+        # 신성마법의 이미지를 살리기 위해 mp가 0가 되었을 시 축복으로 mp회복으로 변경
         self.mp = self.mp - 40
         damage = random.randint(self.mpower - 500, self.mpower + 1000)
         enemy.hp = max(enemy.hp - damage, 0)
@@ -65,7 +65,7 @@ class Monster(Character):
     def __init__(self, name, hp, power):
         super().__init__(name, hp, 0, power)
 
-    # 몬스터의 통상공격
+    # 몬스터의 통상공격 (색 배분을 위해 모체 클래스에서 분리)
     def attack(self, enemy):
         damage = random.randint(self.power - 2, self.power + 2)
         enemy.hp = max(enemy.hp - damage, 0)
@@ -73,20 +73,25 @@ class Monster(Character):
               f"\033[32m{player_name}\033[0m" + f"에게 \033[95m{damage}\033[0m의 데미지를 입혔습니다. \n")
         if enemy.hp == 0:
             print(f"\033[32m{player_name}\033[0m가(이) 쓰러졌습니다. \n")
+    # 초반 몬스터가 가진 MAX_HP 상태 출력
 
     def show_status(self):
         print(
             f"\033[31m{devil.name}\033[0m 의 상태: HP \033[91m{self.hp}\033[0m/\033[91m{self.max_hp}\033[0m \n")
+    # 몬스터 HP상태 체크
 
     def status_check(self):
         print(f"\033[31m{devil.name}\033[0m 의 HP" +
               f" : \033[91m{self.hp}\033[0m \n")
+
+# 디아블로에만 플레이어 부활 기믹을 넣기 위한 클래스
 
 
 class Diablo(Monster):
     def __init__(self, name, hp, power):
         super().__init__(name, hp, power)
 
+    # 통상공격에 부활 메소드를 가져올 수 있도록 추가한 공격 메소드
     def attack(self, enemy):
         damage = random.randint(self.power - 20, self.power + 200)
         enemy.hp = max(enemy.hp - damage, 0)
@@ -96,9 +101,7 @@ class Diablo(Monster):
             print(f"\033[32m{player_name}\033[0m가(이) 쓰러졌습니다.\n")
             self.resurrect()
 
-    #         player.resurrect()
-    # def resurrect(self):
-    #     pass
+    # 디아블로라는 몬스터에게 당했을 때만 플레이어의 부활 가능
     def resurrect(self):
         choice = int(
             input("쓰러진 당신에게 가호가 내려집니다. 제발 저희를 구원해주세요. (1: 부활 / 2: 안식 )"))
@@ -128,36 +131,34 @@ print("불타오르는 대지 그 너머 당신의 눈 앞에 힘의 문양이 �
 # print(player.name + "님 당신이 맞설 상대는 군주라 불리는 악마인 " + "\033[31m" + devil.name + "\033[0m" + "입니다. 너무 늦기 전에 그 차원문을 타고 가서  "+ "\033[31m" + devil.name + "\033[0m" + "를 쓰러트려 주십시오!")
 print(f"\033[32m{player.name}\033[0m" + "님 당신이 맞설 상대는 군주라 불리는 악마인 " + f"\033[31m{devil.name}\033[0m" +
       "입니다. 너무 늦기 전에 그 차원문을 타고 가서  " + f"\033[31m{devil.name}\033[0m" + "를 쓰러트려 주십시오!\n")
+
 # 반복문으로 들어가기 전 각자의 체력 상태를 확인
 print("각자의 현재 체력 상태입니다. 주의하세요.\n")
-
 Player.show_status(player)
 Monster.show_status(devil)
 
 while True:
+    print("\n=== 전투 개시 ===")
     # 공격 방식 선택
     print("공격 방법을 선택해주세요.\n")
     select_attack = int(
-        input("1."+"\033[96m{통상공격}\033[0m" + "2." + "\033[93m{신성마법}\033[0m "))
-
-    # #공격후 스테이터스 확인
+        input("1."+"\033[96m{통상공격}\033[0m" + "2." + "\033[93m{신성마법}(소모 MP : 40)\033[0m\n"))
     if select_attack == 1:
         player.attack(devil)
     elif select_attack == 2:
         player.mattack(devil)
-        # print(f"\033[32m{player.name}\033[0m" + "의 잔여MP : " +
-        #       f"\033[34m{player.mp}\033[0m" + "/" + f"\033[34m{player.mp_max}\033[0m \n")
-
     else:
         print("잘못 선택하셨습니다 \n")
         continue
     devil.attack(player)
-
+    print("\n================")
+    # 각각의 스테이터스 체크
     Player.status_check(player)
     Monster.status_check(devil)
-
+    # 시간을 두고 출력되도록 모듈을 추가
     time.sleep(1)
 
+    # 엔딩 끝맺음을 위한 if문
     if devil.hp == 0:
         print(f"\033[31m{devil.name}\033[0m" +
               "이(가) 쓰러졌습니다. 당신의 승리입니다. 저희는 구원받을 것입니다.\n")
