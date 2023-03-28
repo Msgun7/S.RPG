@@ -54,10 +54,10 @@ class Player(Character):
         print(
             f"\033[32m{player.name}\033[0m의 상태: HP \033[91m{self.hp}\033[0m/\033[91m{self.max_hp}\033[0m\n")
 
-    # 부모 클래스에 존재하는 status_check 메소드를 overriding 합니다.
+    #
     def status_check(self):
-        print(f"\033[32m{player.name}\033[0m" + f"님의 HP : \033[91m{self.hp}\033[0m/ " +
-              f"\033[32m{player.name}\033[0m" + f"님의 MP : \033[34m{self.mp}\033[0m \n")
+        print(f"\033[32m{player.name}\033[0m" +
+              f"님의 HP : \033[91m{self.hp}\033[0m/ " + f"MP : \033[34m{self.mp}\033[0m \n")
 
 
 # 몬스터 클래스입니다.
@@ -145,8 +145,8 @@ while True:
         player.attack(devil)
     elif select_attack == 2:
         player.mattack(devil)
-        print(f"\033[32m{player.name}\033[0m" + "의 잔여MP : " +
-              f"\033[34m{player.mp}\033[0m" + "/" + f"\033[34m{player.mp_max}\033[0m \n")
+        # print(f"\033[32m{player.name}\033[0m" + "의 잔여MP : " +
+        #       f"\033[34m{player.mp}\033[0m" + "/" + f"\033[34m{player.mp_max}\033[0m \n")
 
     else:
         print("잘못 선택하셨습니다 \n")
